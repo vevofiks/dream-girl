@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Girl | Premium Bridal Studio & Gallery</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@200;300;400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --text: #f4f1ea;
+            --accent: #c5a059;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            --page-padding: 10%;
+            /* Increased padding */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.4;
+        }
+
+        /* --- Custom Cursor --- */
+        #cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0px;
+            font-weight: 600;
+            color: var(--bg);
+            background: transparent;
+            mix-blend-mode: difference;
+            transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            transform: translate(-50%, -50%);
+        }
+
+        #cursor::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .container {
+            padding: 0 var(--page-padding);
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 30px var(--page-padding);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* --- Hero --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1581674210501-c760093514e8?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: clamp(4rem, 12vw, 10rem);
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        .hero-sub {
+            color: var(--accent);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        /* --- Gallery Section (Bento Grid) --- */
+        .gallery-sec {
+            padding: 100px 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            margin-top: 50px;
+            padding: 0px 15px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            /* Slightly more rounded for bento feel */
+            background: #111;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            filter: grayscale(20%) brightness(90%);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+            filter: grayscale(0%) brightness(100%);
+        }
+
+        /* Bento Spans */
+        .g-col-3 {
+            grid-column: span 3;
+        }
+
+        .g-col-4 {
+            grid-column: span 4;
+        }
+
+        .g-col-6 {
+            grid-column: span 6;
+        }
+
+        .g-col-8 {
+            grid-column: span 8;
+        }
+
+        .g-col-12 {
+            grid-column: span 12;
+        }
+
+        .g-row-1 {
+            grid-row: span 1;
+            height: 300px;
+        }
+
+        .g-row-2 {
+            grid-row: span 2;
+            height: 620px;
+        }
+
+        /* 300*2 + 20 gap */
+
+        @media (max-width: 900px) {
+
+            .g-col-3,
+            .g-col-4,
+            .g-col-8 {
+                grid-column: span 6;
+            }
+
+            .g-row-1 {
+                height: 250px;
+            }
+
+            .g-row-2 {
+                height: 520px;
+            }
+
+            /* 250 + 20 + 250 */
+        }
+
+        @media (max-width: 600px) {
+
+            .g-col-3,
+            .g-col-4,
+            .g-col-6,
+            .g-col-8,
+            .g-col-12 {
+                grid-column: span 12;
+            }
+
+            .g-row-1,
+            .g-row-2 {
+                height: 350px;
+            }
+        }
+
+        /* --- Section Headers --- */
+        .sec-header {
+            display: flex;
+            text-transform: uppercase;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 80px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+            padding: 0px 20px;
+        }
+
+        .sec-header h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 5vw, 4rem);
+        }
+
+        .sec-header p {
+            opacity: 0.7;
+        }
+
+        /* --- Services (Brown Paper Book) --- */
+        .services {
+            padding: 150px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .service-book {
+            background: linear-gradient(135deg, #8B7355 0%, #A0826D 50%, #8B7355 100%);
+            border-radius: 8px;
+            padding: 60px;
+            max-width: 1246px;
+            width: 100%;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 0 100px rgba(0, 0, 0, 0.1),
+                inset 20px 0 40px rgba(0, 0, 0, 0.15),
+                inset -20px 0 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .service-book::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.3) 0%,
+                    rgba(0, 0, 0, 0.5) 50%,
+                    rgba(0, 0, 0, 0.3) 100%);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .service-book-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .service-book-header h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: #2d1f1a;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .service-book-header p {
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: #4a3528;
+            font-size: 1.1rem;
+        }
+
+        .service-list {
+            display: grid;
+            gap: 30px;
+        }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 25px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #4a3528;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .service-item::before {
+            content: '✦';
+            position: absolute;
+            left: 10px;
+            color: var(--accent);
+            font-size: 0.8rem;
+        }
+
+        .service-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .service-name {
+            font-family: var(--font-serif);
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            color: #2d1f1a;
+            font-style: italic;
+            flex: 1;
+        }
+
+        .service-price {
+            font-family: var(--font-main);
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: #4a3528;
+            font-weight: 600;
+            margin-left: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .service-book {
+                padding: 40px 30px;
+                box-shadow:
+                    0 10px 30px rgba(0, 0, 0, 0.4),
+                    inset 0 0 50px rgba(0, 0, 0, 0.05);
+            }
+
+            .service-book::before {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .services {
+                padding: 80px 0;
+            }
+
+            .service-book {
+                padding: 30px 20px;
+            }
+
+            .service-item {
+                flex-direction: column;
+                gap: 8px;
+                padding: 20px 25px;
+            }
+
+            .service-price {
+                margin-left: 0;
+                align-self: flex-start;
+            }
+        }
+
+        /* --- Map & Contact --- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 80px;
+            padding-bottom: 100px;
+        }
+
+        .map-wrapper {
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            filter: invert(90%) hue-rotate(180deg);
+        }
+
+        .magnet-btn {
+            background: var(--accent);
+            color: #000;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 900px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="cursor"></div>
+
+    <header>
+        <div class="logo">Dream Girl</div>
+        <a href="tel:09846679424" class="magnet-btn">Enquire</a>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero container">
+            <div class="hero-sub">The Master of Makeovers</div>
+            <h1 class="hero-title">
+                <span class="reveal">Dream</span> <br>
+                <span class="reveal">Girl</span>
+            </h1>
+        </section>
+
+        <!-- PORTFOLIO GALLERY -->
+        <section class="gallery-sec container">
+            <div class="sec-header">
+                <h2>The Studio Album</h2>
+                <p>Kerala's Finest Bridal Tales</p>
+            </div>
+
+            <div class="gallery-grid">
+                <!-- Row 1-2: Large Feature Left -->
+                <div class="gallery-item g-col-6 g-row-2 drift" data-speed="0.03">
+                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Kerala Bride Portrait">
+                </div>
+
+                <!-- Row 1: Medium Detail Top Right -->
+                <div class="gallery-item g-col-3 g-row-1 drift" data-speed="-0.02">
+                    <img src="https://images.unsplash.com/photo-1710552524021-a8dc68c2a8dc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Temple Jewellery">
+                </div>
+
+                <!-- Row 1: Medium Detail -->
+                <div class="gallery-item g-col-3 g-row-1 drift" data-speed="0.02">
+                    <img src="https://images.unsplash.com/photo-1673413350047-ea5c0fd58c9e?q=80&w=1129&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Indian Bridal Makeup">
+                </div>
+
+                <!-- Row 2: Wide Feature Right -->
+                <div class="gallery-item g-col-6 g-row-1 drift" data-speed="-0.01">
+                    <img src="https://images.unsplash.com/photo-1613966802194-d46a163af70d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Bridal Glow">
+                </div>
+
+                <!-- Row 3: Equal Thirds -->
+                <div class="gallery-item g-col-4 g-row-1 drift" data-speed="0.02">
+                    <img src="https://images.unsplash.com/photo-1740416328607-4c54d55540ac?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Traditional Saree Draping">
+                </div>
+
+                <div class="gallery-item g-col-4 g-row-1 drift" data-speed="-0.03">
+                    <img src="https://imgs.search.brave.com/g8TTHh1_uM19NHBQyquO5d39uBkCdeMbJyE9s8uZA4o/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/d2VkZGluZ2JhemFh/ci5jb20vcGhvdG9z/L3BpY3R1cmVzLzAw/Ny82ODIvMDIxL25l/d19tZWRpdW0vZnJv/bnQtaGFuZC1pbnRy/aWNhdGUtaGFsZi1h/bmQtaGFsZi1tZWhl/bmRpLTEwMjR4MTAy/NC5qcGc_MTY5NTE0/NjI2OQ"
+                        alt="Mehendi Detail">
+                </div>
+
+                <div class="gallery-item g-col-4 g-row-1 drift" data-speed="0.01">
+                    <img src="https://images.unsplash.com/photo-1611596734635-6ef5a3a03482?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Eye Makeup Detail">
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section class="services container" id="services">
+            <div class="service-book">
+                <div class="service-book-header">
+                    <h2>Our Services</h2>
+                    <p>Menu of Elegance</p>
+                </div>
+
+                <div class="service-list">
+                    <div class="service-item reveal">
+                        <div class="service-name">Airbrush Bridal Makeup</div>
+                        <div class="service-price">₹18,000+</div>
+                    </div>
+                    <div class="service-item reveal">
+                        <div class="service-name">HD Groom Makeover</div>
+                        <div class="service-price">₹5,000+</div>
+                    </div>
+                    <div class="service-item reveal">
+                        <div class="service-name">Casmara Gold Facial</div>
+                        <div class="service-price">₹3,500</div>
+                    </div>
+                    <div class="service-item reveal">
+                        <div class="service-name">Pre-Bridal Skincare Package</div>
+                        <div class="service-price">₹25,000+</div>
+                    </div>
+                    <div class="service-item reveal">
+                        <div class="service-name">Professional Hair Styling</div>
+                        <div class="service-price">₹2,500+</div>
+                    </div>
+                    <div class="service-item reveal">
+                        <div class="service-name">Traditional Saree Draping</div>
+                        <div class="service-price">₹1,500</div>
+                    </div>
+                    <div class="service-item reveal">
+                        <div class="service-name">Party Makeup</div>
+                        <div class="service-price">₹8,000+</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="container contact-grid">
+            <div class="contact-info">
+                <h3 style="font-family: var(--font-serif); font-size: 3rem;">Visit the Studio</h3>
+                <p style="margin: 20px 0 40px; opacity: 0.6;">1st Floor, Kallay Tower, Kasalakkunnu Road, Manjeri,
+                    Kerala</p>
+                <a href="https://wa.me/919846679424" class="magnet-btn">Contact on WhatsApp</a>
+            </div>
+            <div class="map-wrapper reveal">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7829.917922475669!2d76.11127379418254!3d11.11643445133659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba6378826c4c6f1%3A0x675998e67aa20660!2sDream%20Girl%20The%20Beauty%20Spot%20%26%20Bridal%20Studio!5e0!3m2!1sen!2sin!4v1767596362335!5m2!1sen!2sin"
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </section>
+    </main>
+
+    <footer
+        style="padding: 50px var(--page-padding); text-align: center; border-top: 1px solid rgba(255,255,255,0.05);">
+        <p>&copy; 2026 Dream Girl. Perfection in every stroke.</p>
+    </footer>
+
+    <!-- JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+    <script>
+        const lenis = new Lenis();
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Custom Cursor Movement
+        const cursor = document.querySelector('#cursor');
+        window.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, {
+                left: e.clientX,
+                top: e.clientY,
+                duration: 0.6,
+                ease: "power2.out"
+            });
+        });
+
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                gsap.to(cursor, {
+                    width: 100,
+                    height: 100,
+                    borderWidth: '3px',
+                    background: 'rgba(197, 160, 89, 0.1)',
+                    duration: 0.3
+                });
+                gsap.to(cursor.querySelector('::before'), { scale: 0, duration: 0.2 });
+                cursor.innerHTML = '<span style="font-size: 11px; letter-spacing: 2px;">VIEW</span>';
+            });
+            item.addEventListener('mouseleave', () => {
+                gsap.to(cursor, {
+                    width: 20,
+                    height: 20,
+                    borderWidth: '2px',
+                    background: 'transparent',
+                    duration: 0.3
+                });
+                cursor.innerHTML = '';
+            });
+        });
+
+        // Parallax Drifting Images
+        gsap.utils.toArray(".drift").forEach((item) => {
+            const speed = item.dataset.speed;
+            gsap.to(item, {
+                yPercent: speed * 100,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top bottom",
+                    scrub: true
+                }
+            });
+        });
+
+        // Text & Item Reveals
+        gsap.utils.toArray(".reveal").forEach(el => {
+            gsap.from(el, {
+                opacity: 0, y: 50, duration: 1,
+                scrollTrigger: { trigger: el, start: "top 90%" }
+            });
+        });
+    </script>
+</body>
+
+</html>
