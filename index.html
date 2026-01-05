@@ -366,9 +366,19 @@
         }
 
         @media (max-width: 600px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
             .magnet-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
+                padding: 8px 16px;
+                font-size: 0.85rem;
+                gap: 8px;
+                /* Space between icon and text */
             }
 
             .services {
@@ -413,6 +423,12 @@
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            white-space: nowrap;
         }
 
         @media (max-width: 900px) {
